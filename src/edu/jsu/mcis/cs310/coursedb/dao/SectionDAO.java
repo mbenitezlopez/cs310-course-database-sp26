@@ -28,12 +28,16 @@ public class SectionDAO {
             Connection conn = daoFactory.getConnection();
             
             if (conn.isValid(0)) {
-                
-                // INSERT YOUR CODE HERE
-                
-            }
-            
+                    String sql = "SELECT * FROM section WHERE subjectid = ? AND num = ? AND termid = ? ORDER BY crn";
+                    ps = conn.prepareStatement(sql);
+                    ps.setString(1, subjectid);
+                    ps.setString(2, num);
+                    ps.setInt(3, termid);
+                    rs = ps.executeQuery();
+                    result = DAOUtility.getResultSetAsJson(rs); // Returns String
+                }
         }
+        
         
         catch (Exception e) { e.printStackTrace(); }
         
@@ -45,7 +49,7 @@ public class SectionDAO {
         }
         
         return result;
-        
     }
-    
+        
 }
+    
